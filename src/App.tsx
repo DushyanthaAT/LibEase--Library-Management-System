@@ -1,5 +1,13 @@
 import React from "react";
+import Home from "./pages/Home";
+import { BrowserRouter } from "react-router-dom";
 
 export default function App() {
-  return <div className="text-red-300">App</div>;
+  return (
+    <div>
+      <BrowserRouter>
+        <Home />
+      </BrowserRouter>
+    </div>
+  );
 }
