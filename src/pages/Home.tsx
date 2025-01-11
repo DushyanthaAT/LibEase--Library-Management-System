@@ -40,7 +40,7 @@ const Books: BookType[] = [
   },
 ];
 
-export default function Home() {
+const Home: React.FC = () => {
   return (
     <div>
       <div className="flex flex-col items-center justify-end w-[screen-10] mx-5 mt-5 bg-sec_green h-[60vh]  rounded-lg realtive md:h-[25vh] lg:h-[30vh] md:flex-row md:justify-start lg:mx-32">
@@ -82,4 +82,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default Home;
