@@ -25,9 +25,11 @@ const Navbar: React.FC = () => {
       </ul>
 
       {/* Sign In Button */}
-      <button className="bg-pri_green px-10 py-2 rounded-lg text-white font-semibold sm:flex hidden">
-        Sign In
-      </button>
+      <Link to="/sign-in">
+        <button className="bg-pri_green px-10 py-2 rounded-lg text-white font-semibold sm:flex hidden">
+          Sign In
+        </button>
+      </Link>
 
       {/* Mobile Menu */}
       <div
