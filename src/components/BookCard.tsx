@@ -1,5 +1,4 @@
 import React from "react";
-import Book from "../assets/book.png";
 
 interface BookCardProps {
   title: string;
@@ -7,7 +6,8 @@ interface BookCardProps {
   image: string;
 }
 
-export default function BookCard({ title, author, image }: BookCardProps) {
+const BookCard: React.FC<BookCardProps> = ({ title, author, image }) => {
+  console.log(title, author, image);
   return (
     <div className="flex flex-col items-center justify-center h-80 w-50 ">
       <div className="h-60 w-50 bg-red-200">
@@ -21,4 +21,6 @@ export default function BookCard({ title, author, image }: BookCardProps) {
       <p className="text-sm font-normal text-text_disable ">{author}</p>
     </div>
   );
-}
+};
+
+export default BookCard;

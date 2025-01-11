@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { HiMenuAlt2, HiMenuAlt3 } from "react-icons/hi";
 
-export default function Navbar() {
+const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
@@ -41,7 +41,7 @@ export default function Navbar() {
         )}
       </div>
 
-      {/* Responsive Menu */}
+      {/* Responsive Menu for mobile Screens*/}
       <div
         className={`${
           isMenuOpen ? "flex" : "hidden"
@@ -65,4 +65,6 @@ export default function Navbar() {
       </div>
     </div>
   );
-}
+};
+
+export default Navbar;

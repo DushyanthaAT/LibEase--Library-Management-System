@@ -22,4 +22,14 @@ html {
     ::-webkit-scrollbar-thumb:hover {
       background: #396056; 
     }
+    @media (max-width: 640px) {
+      ::-webkit-scrollbar {
+        width: 4px; 
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: #4C8073; 
+        border-radius: 5px;
+      }
+    }
   }

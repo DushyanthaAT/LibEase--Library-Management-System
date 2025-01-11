@@ -1,10 +1,12 @@
 import React from "react";
 import TitleText from "../components/TitleText";
 
-export const About = () => {
+const About: React.FC = () => {
   return (
     <div>
       <TitleText title="About" />
     </div>
   );
 };
+
+export default About;

@@ -7,7 +7,7 @@ export default {
         pri_green: "#4C8073",
         sec_green: "#BFD1D2",
         text_green: "#263238",
-        text_disable: "#707070",
+        text_disable: "#AAAAAA",
       },
     },
   },

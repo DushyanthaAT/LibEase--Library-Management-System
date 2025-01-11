@@ -28,7 +28,7 @@ const menuItems: MenuItem[] = [
   { id: 3, title: "Sign Out", icon: <VscSignOut />, link: "#" },
 ];
 
-export default function SideNav() {
+const SideNav: React.FC = () => {
   return (
     <>
       {/* Mobile Screen */}
@@ -56,7 +56,7 @@ export default function SideNav() {
       </div>
     </>
   );
-}
+};
 
 function SideNavCom({ id, title, icon, link }: MenuItem) {
   const location = useLocation();
@@ -90,3 +90,5 @@ function SideNavCom({ id, title, icon, link }: MenuItem) {
     </div>
   );
 }
+
+export default SideNav;
