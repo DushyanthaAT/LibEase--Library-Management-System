@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import About from "./pages/About";
 import Dashboard from "./pages/Admin/Dashboard";
 import AddBook from "./pages/Admin/AddBook";
+import BookPage from "./pages/BookPage";
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/books" element={<Books />} />
+          <Route path="/bookPage" element={<BookPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/create-a-post" element={<AddBook />} />

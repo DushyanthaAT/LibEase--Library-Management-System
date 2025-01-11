@@ -8,26 +8,31 @@ const BooksList = [
     title: "The Great Gatsby",
     author: "F. Scott Fitzgerald",
     image: BookImage,
+    link: "/bookPage",
   },
   {
     title: "1984",
     author: "George Orwell",
     image: BookImage,
+    link: "/bookPage",
   },
   {
     title: "To Kill a Mockingbird  asd asda dasdd",
     author: "Harper Lee",
     image: BookImage,
+    link: "/bookPage",
   },
   {
     title: "Pride and Prejudice",
     author: "Jane Austen",
     image: BookImage,
+    link: "/bookPage",
   },
   {
     title: "The Catcher in the Rye",
     author: "J.D. Salinger",
     image: BookImage,
+    link: "/bookPage",
   },
 ];
 
@@ -42,6 +47,7 @@ const Book: React.FC = () => {
             title={book.title}
             author={book.author}
             image={book.image}
+            link={book.link}
           />
         ))}
       </div>
