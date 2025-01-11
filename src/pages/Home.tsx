@@ -43,7 +43,6 @@ const Books: BookType[] = [
 export default function Home() {
   return (
     <div>
-      <Navbar />
       <div className="flex flex-col items-center justify-end w-[screen-10] mx-5 mt-5 bg-sec_green h-[60vh]  rounded-lg realtive md:h-[25vh] lg:h-[30vh] md:flex-row md:justify-start lg:mx-32">
         <img
           src={homeImage}
@@ -70,8 +69,8 @@ export default function Home() {
       </div>
       <div className="flex flex-col items-center mt-1">
         <TitleText title="Recent Books" />
-        <div className="grid grid-cols-1 gap-6 mt-4 md:grid-cols-2 lg:grid-cols-4">
-          {Books.map((book: BookType, index: number) => (
+        <div className="grid gap-4 grid-auto-fit-xs w-full lg:w-auto lg:grid-cols-4">
+          {Books.slice(0, 4).map((book: BookType, index: number) => (
             <BookCard
               title={book.title}
               author={book.author}
