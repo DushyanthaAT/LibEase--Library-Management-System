@@ -1,4 +1,4 @@
-import React, { act, useState } from "react";
+import React, { act, useEffect, useState } from "react";
 import SideNav from "../../components/SideNav";
 import TitleText from "../../components/TitleText";
 import InputTextBox from "../../components/InputTextBox";
@@ -7,19 +7,48 @@ import { IoPerson } from "react-icons/io5";
 import { FileInput } from "flowbite-react";
 import ButtonCom from "../../components/ButtonCom";
 import axios from "axios";
-import { Slide, ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useParams } from "react-router-dom";
 
-const AddBook: React.FC = () => {
+interface TableProps {
+  title: string;
+  author: string;
+  bookId: string;
+}
+
+const UpdateBook: React.FC = () => {
+  const { bookId } = useParams<{ bookId: string }>();
+  const [data, setData] = useState<TableProps[]>([]);
   const [title, setTitle] = useState<string>("");
   const [author, setAuthor] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [genre, setGenre] = useState("a");
   const [publicationYear, setPublicationYear] = useState(0);
 
-  // const getData=()=>{
-  //   axios.get("http://localhost:3001/books").then((response)=>{}
-  // }
+  const getData = (bookId: string) => {
+    axios
+      .get(`https://localhost:7197/api/Book/${bookId}`)
+      .then((result) => {
+        setTitle(result.data.title);
+        setAuthor(result.data.author);
+        setDescription(result.data.description);
+        setGenre(result.data.genre);
+        setPublicationYear(result.data.publicationYear);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    if (bookId) {
+      getData(bookId); // Proceed only if bookId is defined
+    } else {
+      // You can handle the case where `bookId` is undefined, maybe redirect or show a message
+      toast.error("Invalid Book ID");
+    }
+  }, [bookId]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -31,7 +60,7 @@ const AddBook: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const url = "https://localhost:7197/api/Book";
+    const url = `https://localhost:7197/api/Book/${bookId}`;
     const data = {
       author: author,
       title: title,
@@ -40,14 +69,14 @@ const AddBook: React.FC = () => {
       publicationYear: publicationYear,
     };
     axios
-      .post(url, data)
+      .put(url, data)
       .then((results) => {
         console.log(results);
         clearForm();
-        toast.success("Book added successfully");
+        toast.success("Book updated successfully");
       })
       .catch((error) => {
-        toast.error("Failed to add book");
+        toast.error("Failed to update book");
       });
   };
 
@@ -67,19 +96,7 @@ const AddBook: React.FC = () => {
       <div className="flex-2 flex flex-col items-center w-full mt-2">
         <TitleText title="Add a Book" />
         <div className="w-full md:w-1/2 lg:w-1/3  px-4">
-          <ToastContainer
-            position="bottom-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-            transition={Slide}
-          />
+          <ToastContainer />
           <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
             <label
               htmlFor="book-title"
@@ -142,11 +159,11 @@ const AddBook: React.FC = () => {
               id="file-upload-helper-text"
               // helperText="SVG, PNG, JPG or GIF (MAX. 800x400px)."
             />
-            <ButtonCom name="Submit" />
+            <ButtonCom name="Update" />
           </form>
         </div>
       </div>
     </div>
   );
 };
-export default AddBook;
+export default UpdateBook;

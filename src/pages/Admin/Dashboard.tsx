@@ -4,33 +4,6 @@ import SideNav from "../../components/SideNav";
 import Table from "../../components/Table";
 import { Link } from "react-router-dom";
 
-const tableData = [
-  {
-    date: "12/12/2021",
-    bookId: 1,
-    bookName: "The Great Gatsby",
-    link: "/book/1",
-  },
-  { date: "12/12/2021", bookId: 2, bookName: "1984", link: "/book/2" },
-  {
-    date: "12/12/2021",
-    bookId: 3,
-    bookName: "To Kill a Mockingbird",
-    link: "/book/3",
-  },
-  {
-    date: "12/12/2021",
-    bookId: 4,
-    bookName: "Pride and Prejudice",
-    link: "/book/4",
-  },
-  {
-    date: "12/12/2021",
-    bookId: 5,
-    bookName: "The Catcher in the Rye",
-    link: "/book/5",
-  },
-];
 
 const Dashboard: React.FC = () => {
   return (
@@ -41,7 +14,7 @@ const Dashboard: React.FC = () => {
       <div className="flex-2 flex flex-col items-center w-full mt-2">
         <TitleText title="Dashboard" />
         <div className="w-full px-4 lg:px-10">
-          <Table data={tableData} />
+          <Table />
         </div>
       </div>
     </div>

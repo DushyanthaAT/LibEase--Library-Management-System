@@ -8,6 +8,7 @@ import Dashboard from "./pages/Admin/Dashboard";
 import AddBook from "./pages/Admin/AddBook";
 import BookPage from "./pages/BookPage";
 import SignIn from "./pages/SignIn";
+import UpdateBook from "./pages/Admin/UpdateBook";
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -23,6 +24,7 @@ const App: React.FC = () => {
         <Route path="/about" element={<About />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/create-a-post" element={<AddBook />} />
+        <Route path="/admin/update-a-post/:bookId" element={<UpdateBook />} />
       </Routes>
     </div>
   );
