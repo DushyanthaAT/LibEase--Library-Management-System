@@ -9,6 +9,8 @@ import ButtonCom from "../../components/ButtonCom";
 import axios from "axios";
 import { Slide, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Bookimage from "../../assets/book.png";
+import { useNavigate } from "react-router-dom";
 
 const AddBook: React.FC = () => {
   const [title, setTitle] = useState<string>("");
@@ -16,6 +18,10 @@ const AddBook: React.FC = () => {
   const [description, setDescription] = useState<string>("");
   const [genre, setGenre] = useState("a");
   const [publicationYear, setPublicationYear] = useState(0);
+  const [imageName, setImageName] = useState<string>("sampleTitle");
+  const [imageSrc, setImageSrc] = useState<string>(Bookimage);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const navigate = useNavigate();
 
   // const getData=()=>{
   //   axios.get("http://localhost:3001/books").then((response)=>{}
@@ -31,6 +37,10 @@ const AddBook: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!title || !author || !description || !genre || !imageFile) {
+      toast.error("All fields are required.");
+      return;
+    }
     const url = "https://localhost:7197/api/Book";
     const data = {
       author: author,
@@ -38,13 +48,20 @@ const AddBook: React.FC = () => {
       description: description,
       genre: genre,
       publicationYear: publicationYear,
+      imageName: imageName,
+      imageFile: imageFile,
     };
     axios
-      .post(url, data)
+      .post(url, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((results) => {
         console.log(results);
         clearForm();
         toast.success("Book added successfully");
+        navigate("/admin/dashboard");
       })
       .catch((error) => {
         toast.error("Failed to add book");
@@ -57,16 +74,33 @@ const AddBook: React.FC = () => {
     setDescription("");
     setGenre("");
     setPublicationYear(0);
+    setImageName("");
+    setImageFile(null);
+  };
+
+  const showPreview = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      setImageName(file.name);
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImageSrc(reader.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
     <div className="flex flex-col w-full lg:flex-row mt-4 lg:mt-0">
-      <div className="flex-1 flex flex-col items-center md:items-start w-full">
+      <div className="flex-1 flex flex-col items-center md:items-start w-full ">
         <SideNav />
       </div>
-      <div className="flex-2 flex flex-col items-center w-full mt-2">
+      <div className="flex-2 flex flex-col items-center w-full mt-2 lg:ml-60">
         <TitleText title="Add a Book" />
-        <div className="w-full md:w-1/2 lg:w-1/3  px-4">
+        <div className="w-full md:w-1/2 lg:w-1/2 2xl:w-1/3 px-4">
           <ToastContainer
             position="bottom-right"
             autoClose={5000}
@@ -80,7 +114,10 @@ const AddBook: React.FC = () => {
             theme="light"
             transition={Slide}
           />
-          <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
+          <form
+            className="flex flex-col space-y-4 mb-5"
+            onSubmit={handleSubmit}
+          >
             <label
               htmlFor="book-title"
               className="block text-sm font-medium text-gray-700"
@@ -132,16 +169,29 @@ const AddBook: React.FC = () => {
               onChange={(e) => setDescription(e.target.value)}
             />
 
-            <label
-              htmlFor="file-upload"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Upload File
-            </label>
-            <FileInput
-              id="file-upload-helper-text"
-              // helperText="SVG, PNG, JPG or GIF (MAX. 800x400px)."
-            />
+            <div className="flex flex-col items-center lg:flex-row gap-4 lg:items-start justify-between bg-[#F6F6F6] border-dashed border-2 border-gray-200 p-4 rounded-md">
+              <div className="flex flex-col">
+                <label
+                  htmlFor="file-upload"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Upload File
+                </label>
+                <FileInput
+                  id="file-upload-helper-text"
+                  onChange={showPreview}
+                  // helperText="SVG, PNG, JPG or GIF (MAX. 800x400px)."
+                />
+              </div>
+              <div className="w-28 h-40 min-w-24 min-h-36 bg-slate-300">
+                <img
+                  src={imageSrc}
+                  alt={title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
             <ButtonCom name="Submit" />
           </form>
         </div>
