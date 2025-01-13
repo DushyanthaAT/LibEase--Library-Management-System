@@ -8,6 +8,7 @@ interface BookProps {
   title: string;
   author: string;
   bookId: number;
+  imageSrc: string;
 }
 
 const Book: React.FC = () => {
@@ -36,7 +37,7 @@ const Book: React.FC = () => {
             key={book.title}
             title={book.title}
             author={book.author}
-            // image={book.image}
+            image={book.imageSrc}
             link={`/book/${book.bookId}`}
           />
         ))}
