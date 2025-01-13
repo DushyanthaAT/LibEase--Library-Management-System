@@ -11,7 +11,7 @@ const Dashboard: React.FC = () => {
       <div className="flex-1 flex flex-col items-center md:items-start w-full">
         <SideNav />
       </div>
-      <div className="flex-2 flex flex-col items-center w-full mt-2">
+      <div className="flex-2 flex flex-col items-center w-full mt-2 lg:ml-60">
         <TitleText title="Dashboard" />
         <div className="w-full px-4 lg:px-10">
           <Table />

@@ -44,7 +44,7 @@ const SideNav: React.FC = () => {
       </div>
 
       {/* Desktop Screen */}
-      <div className="hidden lg:flex flex-col w-60 h-screen bg-[#F6F6F6] gap-5 px-3 py-5">
+      <div className="hidden lg:flex flex-col w-60 h-screen bg-[#F6F6F6] gap-5 px-3 py-5 fixed">
         {menuItems.map((item) => (
           <SideNavCom
             id={item.id}
