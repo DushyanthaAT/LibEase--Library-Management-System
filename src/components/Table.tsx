@@ -37,9 +37,7 @@ const Table: React.FC = () => {
   }, []);
 
   const handleEdit: (bookId: number) => void = (bookId) => {
-    setSelectedBookId(bookId);
-    setConfirmationType("edit");
-    setIsModalOpen(true);
+    navigate(`/admin/update-a-post/${bookId}`);
   };
 
   const handleDelete: (bookId: number) => void = (bookId) => {
@@ -147,11 +145,7 @@ const Table: React.FC = () => {
       <ConfirmationModal
         isOpen={isModalOpen}
         confirmationType={confirmationType}
-        onConfirm={
-          confirmationType === "delete"
-            ? confirmDelete
-            : () => navigate(`/admin/update-a-post/${selectedBookId}`)
-        }
+        onConfirm={confirmDelete}
         onCancel={cancelAction}
       />
     </>
