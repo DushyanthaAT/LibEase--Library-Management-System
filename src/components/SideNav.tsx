@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { TbLayoutDashboard } from "react-icons/tb";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import { VscSignOut } from "react-icons/vsc";
+import ConfirmationModal from "./ConfirmationModal";
 
 interface MenuItem {
   id: number;
@@ -36,13 +37,24 @@ const menuItems: MenuItem[] = [
 ];
 
 const SideNav: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [confirmationType, setConfirmationType] = useState<string>("");
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    console.log("Logging out...");
+    setConfirmationType("signout");
+    setIsModalOpen(true);
+  };
+
+  const confirmLogout = () => {
     localStorage.removeItem("authToken");
     navigate("/");
   };
+
+  const cancelAction = () => {
+    setIsModalOpen(false);
+  };
+
   menuItems[2].onClick = handleLogout;
   return (
     <>
@@ -71,6 +83,13 @@ const SideNav: React.FC = () => {
           />
         ))}
       </div>
+      {/* Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        confirmationType={confirmationType}
+        onConfirm={confirmLogout}
+        onCancel={cancelAction}
+      />
     </>
   );
 };
@@ -133,6 +152,5 @@ function SideNavCom({ title, icon, link, onClick }: SideNavComProps) {
     </div>
   );
 }
-
 
 export default SideNav;
