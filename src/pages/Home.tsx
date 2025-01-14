@@ -28,12 +28,14 @@ const containerStyles = {
 };
 
 const Home: React.FC = () => {
+  
   const [data, setData] = useState<BookProps[]>([]);
   const getData = () => {
     axios
       .get("https://localhost:7197/api/Book")
       .then((result) => {
-        setData(result.data);
+        const shuffledBooks = result.data.sort(() => Math.random() - 0.5);
+        setData(shuffledBooks.slice(0, 4));
       })
       .catch((error) => {
         console.log(error);
@@ -97,7 +99,7 @@ const Home: React.FC = () => {
           initial="hidden40"
           whileInView="show"
         >
-          <TitleText title="Recent Books" />
+          <TitleText title="Random Books" />
         </motion.div>
 
         <motion.div
@@ -106,7 +108,7 @@ const Home: React.FC = () => {
           initial="hidden20"
           whileInView="show"
         >
-          {data.slice(0, 4).map((book) => (
+          {data.map((book) => (
             <BookCard
               key={book.title}
               title={book.title}
