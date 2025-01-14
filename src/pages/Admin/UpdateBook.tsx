@@ -29,6 +29,7 @@ const UpdateBook: React.FC = () => {
   const [imageName, setImageName] = useState<string>("sampleTitle");
   const [imageSrc, setImageSrc] = useState<string>(Bookimage);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [initialTitle, setInitialTitle] = useState<string>("");
   const navigate = useNavigate();
 
   const getData = (bookId: string) => {
@@ -36,6 +37,7 @@ const UpdateBook: React.FC = () => {
       .get(`https://localhost:7197/api/Book/${bookId}`)
       .then((result) => {
         setTitle(result.data.title);
+        setInitialTitle(result.data.title);
         setAuthor(result.data.author);
         setDescription(result.data.description);
         setGenre(result.data.genre);
@@ -125,7 +127,7 @@ const UpdateBook: React.FC = () => {
         <SideNav />
       </div>
       <div className="flex-2 flex flex-col items-center w-full mt-2 lg:ml-60">
-        <TitleText title={`Update ${title}`} />
+        <TitleText title={`Update ${initialTitle}`} />
         <div className="w-full md:w-1/2 lg:w-1/2 2xl:w-1/3 px-4">
           <ToastContainer
             position="bottom-right"
