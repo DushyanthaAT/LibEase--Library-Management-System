@@ -1,5 +1,11 @@
 import React from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import Books from "./pages/Books";
 import Navbar from "./components/Navbar";
@@ -9,6 +15,16 @@ import AddBook from "./pages/Admin/AddBook";
 import BookPage from "./pages/BookPage";
 import SignIn from "./pages/SignIn";
 import UpdateBook from "./pages/Admin/UpdateBook";
+
+// PrivateRoute component to protect routes
+const PrivateRoute: React.FC<{ element: JSX.Element }> = ({ element }) => {
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    // Redirect to sign-in page if no token
+    return <Navigate to="/sign-in" />;
+  }
+  return element;
+};
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -22,9 +38,18 @@ const App: React.FC = () => {
         <Route path="/books" element={<Books />} />
         <Route path="/book/:bookId" element={<BookPage />} />
         <Route path="/about" element={<About />} />
-        <Route path="/admin/dashboard" element={<Dashboard />} />
-        <Route path="/admin/create-a-post" element={<AddBook />} />
-        <Route path="/admin/update-a-post/:bookId" element={<UpdateBook />} />
+        <Route
+          path="/admin/dashboard"
+          element={<PrivateRoute element={<Dashboard />} />}
+        />
+        <Route
+          path="/admin/create-a-post"
+          element={<PrivateRoute element={<AddBook />} />}
+        />
+        <Route
+          path="/admin/update-a-post/:bookId"
+          element={<PrivateRoute element={<UpdateBook />} />}
+        />
       </Routes>
     </div>
   );
