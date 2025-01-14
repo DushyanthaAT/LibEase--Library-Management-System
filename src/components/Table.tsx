@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Slide } from "react-toastify";
+import ConfirmationModal from "./ConfirmationModal";
 
 interface TableProps {
   addedDate: string;
@@ -14,6 +15,11 @@ interface TableProps {
 
 const Table: React.FC = () => {
   const [data, setData] = useState<TableProps[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [confirmationType, setConfirmationType] = useState<string>("");
+  const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
+
+  const navigate = useNavigate();
 
   const getData = () => {
     axios
@@ -30,23 +36,37 @@ const Table: React.FC = () => {
     getData();
   }, []);
 
-  const navigate = useNavigate();
-
   const handleEdit: (bookId: number) => void = (bookId) => {
-    navigate(`/admin/update-a-post/${bookId}`);
+    setSelectedBookId(bookId);
+    setConfirmationType("edit");
+    setIsModalOpen(true);
   };
+
   const handleDelete: (bookId: number) => void = (bookId) => {
-    axios
-      .delete(`https://localhost:7197/api/Book/${bookId}`)
-      .then((result) => {
-        if (result.status === 200) {
-          toast.success("Book deleted successfully");
-          getData();
-        }
-      })
-      .catch((error) => {
-        toast.error("Failed to delete book");
-      });
+    setSelectedBookId(bookId);
+    setConfirmationType("delete");
+    setIsModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (selectedBookId !== null) {
+      axios
+        .delete(`https://localhost:7197/api/Book/${selectedBookId}`)
+        .then((result) => {
+          if (result.status === 200) {
+            toast.success("Book deleted successfully");
+            getData();
+            setIsModalOpen(false);
+          }
+        })
+        .catch((error) => {
+          toast.error("Failed to delete book");
+        });
+    }
+  };
+
+  const cancelAction = () => {
+    setIsModalOpen(false);
   };
 
   // Function to format date to YYYY-MM-DD
@@ -123,6 +143,17 @@ const Table: React.FC = () => {
           </tbody>
         </table>
       </div>
+      {/* Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        confirmationType={confirmationType}
+        onConfirm={
+          confirmationType === "delete"
+            ? confirmDelete
+            : () => navigate(`/admin/update-a-post/${selectedBookId}`)
+        }
+        onCancel={cancelAction}
+      />
     </>
   );
 };
