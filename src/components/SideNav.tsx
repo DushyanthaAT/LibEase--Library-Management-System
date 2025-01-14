@@ -79,7 +79,7 @@ interface SideNavComProps extends MenuItem {
   onClick?: () => void; // Accept onClick handler as a prop
 }
 
-function SideNavCom({ id, title, icon, link, onClick }: SideNavComProps) {
+function SideNavCom({ title, icon, link, onClick }: SideNavComProps) {
   const location = useLocation();
   const isActive = location.pathname === link;
 
