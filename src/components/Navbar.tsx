@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { HiMenuAlt2, HiMenuAlt3 } from "react-icons/hi";
-import { MdAccountCircle } from "react-icons/md";
+import { ImBooks } from "react-icons/im";
+import { GoHomeFill } from "react-icons/go";
+import { BsFillInfoCircleFill } from "react-icons/bs";
 import ButtonCom from "./ButtonCom";
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isLoggedIn = Boolean(localStorage.getItem("authToken"));
-  const navigate = useNavigate();
+  const location = useLocation();
 
   const menuItems = [
-    { id: 1, title: "Home", link: "/" },
-    { id: 2, title: "Books", link: "/books" },
-    { id: 3, title: "About", link: "/about" },
+    { id: 1, title: "Home", link: "/", icon: <GoHomeFill /> },
+    { id: 2, title: "Books", link: "/books", icon: <ImBooks /> },
+    { id: 3, title: "About", link: "/about", icon: <BsFillInfoCircleFill /> },
   ];
 
   return (
@@ -22,9 +24,23 @@ const Navbar: React.FC = () => {
       {/* Desktop menu */}
       <ul className="hidden sm:flex space-x-10 font-semibold text-text_disable">
         {menuItems.map((item) => (
-          <li key={item.id}>
-            <Link to={item.link}>{item.title}</Link>
-          </li>
+          <div className="flex items-center gap-1">
+            <div
+              className={`text-pri_green ${
+                location.pathname == item.link ? "block" : "hidden"
+              }`}
+            >
+              {item.icon}
+            </div>
+            <li
+              key={item.id}
+              className={`hover:text-pri_green ${
+                location.pathname == item.link ? "text-pri_green font-bold" : ""
+              }`}
+            >
+              <Link to={item.link}>{item.title}</Link>
+            </li>
+          </div>
         ))}
       </ul>
 
@@ -59,13 +75,17 @@ const Navbar: React.FC = () => {
       <div
         className={`${
           isMenuOpen ? "flex" : "hidden"
-        } absolute top-14 left-0 w-full bg-gray-100 flex-col items-center gap-6 font-semibold text-lg transform transition-transform duration-300`}
+        } absolute top-14 left-0 w-full bg-gray-100 flex-col items-center gap-6 font-semibold text-lg transform transition-transform duration-300 py-4`}
       >
-        <ul className="flex flex-col gap-3 w-full items-center py-2 text-text_green font-bold">
+        <ul className="flex flex-col gap-3 w-full items-center py-2font-bold">
           {menuItems.map((item) => (
             <li
               key={item.id}
-              className="w-[90%] text-center py-2 bg-sec_green rounded-lg hover:bg-pri_green hover:text-white"
+              className={`w-[90%] text-center py-2 rounded-lg ${
+                location.pathname == item.link
+                  ? "text-white bg-pri_green"
+                  : "bg-sec_green  text-text_green "
+              }`}
             >
               <Link to={item.link} onClick={() => setIsMenuOpen(false)}>
                 {item.title}
@@ -73,7 +93,13 @@ const Navbar: React.FC = () => {
             </li>
           ))}
           {isLoggedIn ? (
-            <li className="w-[90%] text-center py-2 bg-sec_green rounded-lg hover:bg-pri_green hover:text-white">
+            <li
+              className={`w-[90%] text-center py-2 rounded-lg ${
+                location.pathname == "/admin/dashboard"
+                  ? "text-white bg-pri_green"
+                  : "bg-sec_green  text-text_green "
+              }`}
+            >
               <Link to="/admin/dashboard" onClick={() => setIsMenuOpen(false)}>
                 <button className="w-full">Admin</button>
               </Link>
