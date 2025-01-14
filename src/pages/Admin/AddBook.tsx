@@ -11,6 +11,7 @@ import { Slide, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Bookimage from "../../assets/book.png";
 import { useNavigate } from "react-router-dom";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 const AddBook: React.FC = () => {
   const [title, setTitle] = useState<string>("");
@@ -21,6 +22,8 @@ const AddBook: React.FC = () => {
   const [imageName, setImageName] = useState<string>("sampleTitle");
   const [imageSrc, setImageSrc] = useState<string>(Bookimage);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [confirmationType, setConfirmationType] = useState<string>("");
   const navigate = useNavigate();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,6 +92,16 @@ const AddBook: React.FC = () => {
     }
   };
 
+  const handleDiscard = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsModalOpen(true);
+    setConfirmationType("discard");
+  };
+
+  const confirmDisacrd = () => {
+    navigate("/admin/dashboard");
+  };
+
   return (
     <div className="flex flex-col w-full lg:flex-row mt-4 lg:mt-0">
       <ToastContainer
@@ -137,14 +150,6 @@ const AddBook: React.FC = () => {
               onChange={handleAuthorChange}
             />
 
-            {/* <label
-              htmlFor="genre"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Genre
-            </label>
-            <InputTextBox placeholder="Enter the genre" icon={<ImBooks />} /> */}
-
             <label
               htmlFor="description"
               className="block text-sm font-medium text-gray-700"
@@ -185,15 +190,18 @@ const AddBook: React.FC = () => {
             </div>
             <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
               <ButtonCom name="Add" onClick={handleSubmit} />
-              <ButtonCom
-                name="Discard"
-                type="reset"
-                onClick={() => navigate("/admin/dashboard")}
-              />
+              <ButtonCom name="Discard" type="reset" onClick={handleDiscard} />
             </div>
           </form>
         </div>
       </div>
+      {/* Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        confirmationType={confirmationType}
+        onConfirm={confirmDisacrd}
+        onCancel={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };

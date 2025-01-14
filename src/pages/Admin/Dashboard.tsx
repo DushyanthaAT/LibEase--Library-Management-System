@@ -2,8 +2,6 @@ import React from "react";
 import TitleText from "../../components/TitleText";
 import SideNav from "../../components/SideNav";
 import Table from "../../components/Table";
-import { Link } from "react-router-dom";
-
 
 const Dashboard: React.FC = () => {
   return (

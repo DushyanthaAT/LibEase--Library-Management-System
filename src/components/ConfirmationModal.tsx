@@ -27,6 +27,9 @@ const ConfirmationModal: React.FC<ModalProps> = ({
     case "signout":
       message = "Are you sure you want to sign out?";
       break;
+    case "discard":
+      message = "Are you sure you want to discard changes?";
+      break;
     default:
       message = "Are you sure you want to proceed?";
   }

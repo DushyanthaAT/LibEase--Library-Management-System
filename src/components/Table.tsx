@@ -69,7 +69,6 @@ const Table: React.FC = () => {
 
   // Function to format date to YYYY-MM-DD
   const formatDate = (dateString: string) => {
-    console.log(dateString);
     const date = new Date(dateString);
     return date.toISOString().split("T")[0];
   };

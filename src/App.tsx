@@ -58,8 +58,11 @@ const App: React.FC = () => {
           />
         </Routes>
       </main>
-      {/* Render Footer only if not a private route */}
-      {!isPrivateRoute && location.pathname !== "/sign-in" && <Footer />}
+      {/* Render Footer only for relavent pages */}
+      {["/", "/books", "/about"].includes(location.pathname) ||
+      location.pathname.startsWith("/book/") ? (
+        <Footer />
+      ) : null}
     </div>
   );
 };

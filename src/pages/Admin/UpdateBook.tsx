@@ -11,6 +11,7 @@ import { Slide, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Bookimage from "../../assets/book.png";
 import { useNavigate, useParams } from "react-router-dom";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 interface TableProps {
   title: string;
@@ -30,6 +31,8 @@ const UpdateBook: React.FC = () => {
   const [imageSrc, setImageSrc] = useState<string>(Bookimage);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [initialTitle, setInitialTitle] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [confirmationType, setConfirmationType] = useState<string>("");
   const navigate = useNavigate();
 
   const getData = (bookId: string) => {
@@ -66,8 +69,38 @@ const UpdateBook: React.FC = () => {
     setAuthor(e.target.value);
   };
 
+  const showPreview = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      setImageName(file.name);
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImageSrc(reader.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDiscard = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsModalOpen(true);
+    setConfirmationType("discard");
+  };
+
+  const confirmDisacrd = () => {
+    navigate("/admin/dashboard");
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setIsModalOpen(true);
+    setConfirmationType("edit");
+  };
+
+  const confirmEdit = () => {
     const url = `https://localhost:7197/api/Book/${bookId}`;
     const data = {
       author: author,
@@ -106,128 +139,116 @@ const UpdateBook: React.FC = () => {
     setImageFile(null);
   };
 
-  const showPreview = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0];
-      setImageName(file.name);
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImageSrc(reader.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   return (
-    <div className="flex flex-col w-full lg:flex-row mt-4 lg:mt-0 ">
-      <div className="flex-1 flex flex-col items-center md:items-start w-full">
-        <SideNav />
-      </div>
-      <div className="flex-2 flex flex-col items-center w-full mt-2 lg:ml-60">
-        <TitleText title={`Update ${initialTitle}`} />
-        <div className="w-full md:w-1/2 lg:w-1/2 2xl:w-1/3 px-4">
-          <ToastContainer
-            position="bottom-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-            transition={Slide}
-          />
-          <form className="flex flex-col space-y-4 mb-5">
-            <label
-              htmlFor="book-title"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Book Title
-            </label>
-            <InputTextBox
-              placeholder="Enter the book title"
-              icon={<FaBook />}
-              value={title}
-              onChange={handleTitleChange}
+    <>
+      <div className="flex flex-col w-full lg:flex-row mt-4 lg:mt-0 ">
+        <div className="flex-1 flex flex-col items-center md:items-start w-full">
+          <SideNav />
+        </div>
+        <div className="flex-2 flex flex-col items-center w-full mt-2 lg:ml-60">
+          <TitleText title={`Update ${initialTitle}`} />
+          <div className="w-full md:w-1/2 lg:w-1/2 2xl:w-1/3 px-4">
+            <ToastContainer
+              position="bottom-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop
+              closeOnClick={false}
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+              transition={Slide}
             />
-
-            <label
-              htmlFor="author-name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Author Name
-            </label>
-            <InputTextBox
-              placeholder="Enter the author name"
-              icon={<IoPerson />}
-              value={author}
-              onChange={handleAuthorChange}
-            />
-
-            {/* <label
-              htmlFor="genre"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Genre
-            </label>
-            <InputTextBox placeholder="Enter the genre" icon={<ImBooks />} /> */}
-
-            <label
-              htmlFor="description"
-              className="block text-sm font-medium text-gray-700 mb-3"
-            >
-              Description
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              required
-              rows={10}
-              placeholder="Type a description here..."
-              className="p-3 w-full border bg-[#F6F6F6] border-gray-200 rounded-md resize-none focus:outline-2 focus:ring-1 focus:ring-pri_green"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-
-            <div className="flex flex-col items-center lg:flex-row gap-4 lg:items-start justify-between bg-[#F6F6F6] border-dashed border-2 border-gray-200 p-4 rounded-md">
-              <div className="flex flex-col">
-                <label
-                  htmlFor="file-upload"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Upload File
-                </label>
-                <FileInput
-                  id="file-upload-helper-text"
-                  onChange={showPreview}
-                  // helperText="SVG, PNG, JPG or GIF (MAX. 800x400px)."
-                />
-              </div>
-              <div className="w-28 h-40 min-w-24 min-h-36 bg-slate-300">
-                <img
-                  src={imageSrc}
-                  alt={title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
-              <ButtonCom name="Update" onClick={handleSubmit} />
-              <ButtonCom
-                name="Discard"
-                type="reset"
-                onClick={() => navigate("/admin/dashboard")}
+            <form className="flex flex-col space-y-4 mb-5">
+              <label
+                htmlFor="book-title"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Book Title
+              </label>
+              <InputTextBox
+                placeholder="Enter the book title"
+                icon={<FaBook />}
+                value={title}
+                onChange={handleTitleChange}
               />
-            </div>
-          </form>
+
+              <label
+                htmlFor="author-name"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Author Name
+              </label>
+              <InputTextBox
+                placeholder="Enter the author name"
+                icon={<IoPerson />}
+                value={author}
+                onChange={handleAuthorChange}
+              />
+
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-700 mb-3"
+              >
+                Description
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                required
+                rows={10}
+                placeholder="Type a description here..."
+                className="p-3 w-full border bg-[#F6F6F6] border-gray-200 rounded-md resize-none focus:outline-2 focus:ring-1 focus:ring-pri_green"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+
+              <div className="flex flex-col items-center lg:flex-row gap-4 lg:items-start justify-between bg-[#F6F6F6] border-dashed border-2 border-gray-200 p-4 rounded-md">
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="file-upload"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Upload File
+                  </label>
+                  <FileInput
+                    id="file-upload-helper-text"
+                    onChange={showPreview}
+                    // helperText="SVG, PNG, JPG or GIF (MAX. 800x400px)."
+                  />
+                </div>
+                <div className="w-28 h-40 min-w-24 min-h-36 bg-slate-300">
+                  <img
+                    src={imageSrc}
+                    alt={title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
+                <ButtonCom name="Update" onClick={handleSubmit} />
+                <ButtonCom
+                  name="Discard"
+                  type="reset"
+                  onClick={handleDiscard}
+                />
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+      {/* Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        confirmationType={confirmationType}
+        onConfirm={
+          confirmationType === "discard" ? confirmDisacrd : confirmEdit
+        }
+        onCancel={() => setIsModalOpen(false)}
+      />
+    </>
   );
 };
 export default UpdateBook;
