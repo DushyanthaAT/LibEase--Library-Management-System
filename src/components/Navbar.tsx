@@ -5,6 +5,7 @@ import { ImBooks } from "react-icons/im";
 import { GoHomeFill } from "react-icons/go";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import ButtonCom from "./ButtonCom";
+import logo from "../assets/logo.png";
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,9 +19,10 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <div className="sticky top-0 z-50 flex py-3 px-10 items-center justify-between bg-white shadow-md">
-      <h1 className="text-pri_green font-black text-xl">LibEase</h1>
-
+    <div className="sticky top-0 z-50 flex py-3 px-6 lg:px-16 items-center justify-between bg-white shadow-md">
+      <Link to="/">
+        <img src={logo} alt="logo" className="w-36 h-auto" />
+      </Link>
       {/* Desktop menu */}
       <ul className="hidden sm:flex space-x-10 font-semibold text-text_disable">
         {menuItems.map((item) => (
