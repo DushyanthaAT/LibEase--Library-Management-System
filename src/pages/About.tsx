@@ -1,6 +1,8 @@
 import React from "react";
 import TitleText from "../components/TitleText";
 import logoHQ from "../assets/logo[hq].png";
+import { motion } from "framer-motion";
+import { fadeIn } from "../../utils/fmotion.ts";
 
 const containerStyles = {
   "--s": "167px",
@@ -19,15 +21,36 @@ const About: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto my-10 px-4">
       <div className="flex justify-center">
-        <TitleText title="About" />
+        <motion.div
+          variants={fadeIn("up", 0.1, 1, 1)}
+          initial="hidden40"
+          whileInView="show"
+        >
+          <TitleText title="About" />
+        </motion.div>
       </div>
-      <div
+      <motion.div
         className="flex justify-center mt-2 items-center mx-auto bg-gray-200 w-full px-20 py-10 rounded-lg"
         style={{ ...containerStyles }}
+        variants={fadeIn("up", 0, 1, 1)}
+        initial="hidden20"
+        whileInView="show"
       >
-        <img src={logoHQ} alt="logo" className="max-w-xl w-[50vw]" />
-      </div>
-      <p className="text-justify text-gray-500 mt-4">
+        <motion.img
+          src={logoHQ}
+          alt="logo"
+          className="max-w-xl w-[50vw]"
+          variants={fadeIn("up", 0.1, 1, 1)}
+          initial="hidden20"
+          whileInView="show"
+        />
+      </motion.div>
+      <motion.p
+        className="text-justify text-gray-500 mt-4"
+        variants={fadeIn("up", 0.1, 1, 1)}
+        initial="hidden20"
+        whileInView="show"
+      >
         The Library Management System is a simple yet powerful tool designed to
         simplify the management of books. It allows users to create, view,
         update, and delete book records, offering an intuitive interface for
@@ -44,7 +67,7 @@ const About: React.FC = () => {
         accessible and simpler for everyone, allowing individuals to focus on
         the enjoyment of reading and sharing knowledge rather than the
         complexities of managing books.
-      </p>
+      </motion.p>
     </div>
   );
 };

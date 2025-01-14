@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import TitleText from "../components/TitleText";
-import BookImage from "../assets/book.png";
 import BookCard from "../components/BookCard";
 import axios from "axios";
+import { motion } from "framer-motion";
+import { fadeIn } from "../../utils/fmotion.ts";
 
 interface BookProps {
   title: string;
@@ -30,8 +31,20 @@ const Book: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center mx-2 md:mx-32">
-      <TitleText title="Books" />
-      <div className="grid gap-4 grid-auto-fit-xs w-full lg:w-auto lg:grid-cols-4">
+      <motion.div
+        variants={fadeIn("up", 0.1, 1, 1)}
+        initial="hidden40"
+        whileInView="show"
+      >
+        <TitleText title="Books" />
+      </motion.div>
+
+      <motion.div
+        className="grid gap-4 grid-auto-fit-xs w-full lg:w-auto lg:grid-cols-4"
+        variants={fadeIn("up", 0.1, 1, 1)}
+        initial="hidden20"
+        whileInView="show"
+      >
         {data.map((book) => (
           <BookCard
             key={book.title}
@@ -41,7 +54,7 @@ const Book: React.FC = () => {
             link={`/book/${book.bookId}`}
           />
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };

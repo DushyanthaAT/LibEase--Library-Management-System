@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import { TbEyeClosed } from "react-icons/tb";
 import { TbEye } from "react-icons/tb";
+import { motion } from "framer-motion";
+import { fadeIn } from "../../utils/fmotion.ts";
 
 const containerStyles = {
   "--s": "167px",
@@ -90,15 +92,34 @@ const SignIn: React.FC = () => {
         theme="light"
         transition={Slide}
       />
-      <div className="bg-white w-[90vw] h-[480px] sm:w-[60vw] md:[50vw] max-w-xl flex flex-col items-center justify-end rounded-xl py-6 relative shadow-[0px_0px_20px_rgba(0,0,0,0.06)]">
-        <img
+      <motion.div
+        className="bg-white w-[90vw] h-[480px] sm:w-[60vw] md:[50vw] max-w-xl flex flex-col items-center justify-end rounded-xl py-6 relative shadow-[0px_0px_20px_rgba(0,0,0,0.06)]"
+        variants={fadeIn("up", 0, 1, 1)}
+        initial="hidden20"
+        whileInView="show"
+      >
+        <motion.img
           src={signInImage}
           alt=""
           className=" w-full max-w-xl absolute -top-20 max-h-[350px] object-contain"
+          variants={fadeIn("up", 0.2, 1, 1)}
+          initial="hidden20"
+          whileInView="show"
         />
         <div className="flex flex-col items-center justify-center">
-          <TitleText title="Sign In" />
-          <div className="flex flex-col gap-4 w-[90vw] px-10 md:px-0 max-w-md">
+          <motion.div
+            variants={fadeIn("up", 0.1, 1, 1)}
+            initial="hidden40"
+            whileInView="show"
+          >
+            <TitleText title="Sign In" />
+          </motion.div>
+          <motion.div
+            className="flex flex-col gap-4 w-[90vw] px-10 md:px-0 max-w-md"
+            variants={fadeIn("up", 0.2, 1, 1)}
+            initial="hidden20"
+            whileInView="show"
+          >
             <InputTextBox
               placeholder="Email"
               icon={<MdEmail />}
@@ -125,12 +146,18 @@ const SignIn: React.FC = () => {
                 )}
               </button>
             </div>
-            <ButtonCom
-              name={loading ? "Signing In..." : "Sign In"}
-              onClick={handleLogin}
-              disabled={loading}
-            />
-          </div>
+            <motion.div
+              variants={fadeIn("up", 0, 1.1, 1)}
+              initial="hidden20"
+              whileInView="show"
+            >
+              <ButtonCom
+                name={loading ? "Signing In..." : "Sign In"}
+                onClick={handleLogin}
+                disabled={loading}
+              />
+            </motion.div>
+          </motion.div>
           <div
             className="flex justify-center items-center gap-2 mt-4 w-full"
             onClick={() => navigate("/")}
@@ -140,7 +167,7 @@ const SignIn: React.FC = () => {
             </span>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

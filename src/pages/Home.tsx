@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
 import homeImage from "../assets/home_image.png";
 import homeImageMobile from "../assets/home_image_mobile.png";
 import BookCard from "../components/BookCard";
 import TitleText from "../components/TitleText";
-import Book from "../assets/book.png";
 import axios from "axios";
+import { motion } from "framer-motion";
+import { fadeIn } from "../../utils/fmotion.ts";
 
 interface BookProps {
   title: string;
@@ -45,36 +45,67 @@ const Home: React.FC = () => {
   }, []);
   return (
     <div className="lg:flex lg:flex-col items-center">
-      <div
+      <motion.div
         className="flex flex-col items-center justify-end w-[screen-10] mx-5 mt-5 bg-sec_green h-[60vh] rounded-lg relative md:h-[25vh] lg:h-[30vh] md:flex-row md:justify-start lg:mx-32 max-w-6xl lg:max-h-60"
         style={{ ...containerStyles }}
+        variants={fadeIn("up", 0.1, 1, 1)}
+        initial="hidden20"
+        whileInView="show"
       >
-        <img
+        <motion.img
           src={homeImage}
           alt="Home Image"
           className="hidden md:block h-[50vh] absolute md:h-[30vh] lg:h-[35vh] -top-4 -right-4  max-h-72"
+          variants={fadeIn("left", 0, 1, 1)}
+          initial="hidden60"
+          whileInView="show"
         />
 
         {/* Image for mobile screens */}
-        <img
+        <motion.img
           src={homeImageMobile}
           alt="Home Image Mobile"
           className="md:hidden h-[50vh] absolute -top-4 object-contain"
+          variants={fadeIn("left", 0, 1, 1)}
+          initial="hidden60"
+          whileInView="show"
         />
 
         <div className="flex flex-col items-center justify-center pb-8 px-6 md:items-start md:w-2/3 z-10">
-          <h2 className="text-2xl text-center font-bold text-text_green mx-2 mt-2 md:text-left md:text-3xl lg:text-4xl">
+          <motion.h2
+            className="text-2xl text-center font-bold text-text_green mx-2 mt-2 md:text-left md:text-3xl lg:text-4xl"
+            variants={fadeIn("up", 0.2, 1, 1)}
+            initial="hidden20"
+            whileInView="show"
+          >
             Welcome to Your Library Management System
-          </h2>
-          <h3 className="text-md font-semibold text-center text-pri_green mx-2 mt-1 md:text-left md:text-lg lg:text-xl">
+          </motion.h2>
+          <motion.h3
+            className="text-md font-semibold text-center text-pri_green mx-2 mt-1 md:text-left md:text-lg lg:text-xl"
+            variants={fadeIn("up", 0.3, 1, 1)}
+            initial="hidden20"
+            whileInView="show"
+          >
             Browse, explore, and unlock a world of books at your fingertips.
             Your perfect read is just a search away.
-          </h3>
+          </motion.h3>
         </div>
-      </div>
+      </motion.div>
       <div className="flex flex-col items-center mt-1">
-        <TitleText title="Recent Books" />
-        <div className="grid gap-4 grid-auto-fit-xs w-full lg:w-auto lg:grid-cols-4">
+        <motion.div
+          variants={fadeIn("up", 0.2, 1, 1)}
+          initial="hidden40"
+          whileInView="show"
+        >
+          <TitleText title="Recent Books" />
+        </motion.div>
+
+        <motion.div
+          className="grid gap-4 grid-auto-fit-xs w-full lg:w-auto lg:grid-cols-4"
+          variants={fadeIn("up", 0.2, 1, 1)}
+          initial="hidden20"
+          whileInView="show"
+        >
           {data.slice(0, 4).map((book) => (
             <BookCard
               key={book.title}
@@ -84,7 +115,7 @@ const Home: React.FC = () => {
               link={`/book/${book.bookId}`}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
