@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiMenuAlt2, HiMenuAlt3 } from "react-icons/hi";
+import { MdAccountCircle } from "react-icons/md";
+import ButtonCom from "./ButtonCom";
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isLoggedIn = Boolean(localStorage.getItem("authToken"));
+  const navigate = useNavigate();
 
   const menuItems = [
     { id: 1, title: "Home", link: "/" },
@@ -25,11 +29,19 @@ const Navbar: React.FC = () => {
       </ul>
 
       {/* Sign In Button */}
-      <Link to="/sign-in">
-        <button className="bg-pri_green px-10 py-2 rounded-lg text-white font-semibold sm:flex hidden">
-          Sign In
-        </button>
-      </Link>
+      {isLoggedIn ? (
+        <Link to="/admin/dashboard">
+          <div className=" sm:flex hidden">
+            <ButtonCom name="Admin" />
+          </div>
+        </Link>
+      ) : (
+        <Link to="/sign-in">
+          <div className=" sm:flex hidden">
+            <ButtonCom name="Sign In" />
+          </div>
+        </Link>
+      )}
 
       {/* Mobile Menu */}
       <div
@@ -60,9 +72,19 @@ const Navbar: React.FC = () => {
               </Link>
             </li>
           ))}
-          <li className="w-[90%] text-center py-2 bg-sec_green rounded-lg hover:bg-pri_green hover:text-white">
-            <button className="w-full">Sign In</button>
-          </li>
+          {isLoggedIn ? (
+            <li className="w-[90%] text-center py-2 bg-sec_green rounded-lg hover:bg-pri_green hover:text-white">
+              <Link to="/admin/dashboard" onClick={() => setIsMenuOpen(false)}>
+                <button className="w-full">Admin</button>
+              </Link>
+            </li>
+          ) : (
+            <li className="w-[90%] text-center py-2 bg-sec_green rounded-lg hover:bg-pri_green hover:text-white">
+              <Link to="/sign-in" onClick={() => setIsMenuOpen(false)}>
+                <button className="w-full">Sign In</button>
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </div>
