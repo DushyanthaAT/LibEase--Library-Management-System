@@ -120,13 +120,13 @@ const UpdateBook: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full lg:flex-row mt-4 lg:mt-0">
+    <div className="flex flex-col w-full lg:flex-row mt-4 lg:mt-0 ">
       <div className="flex-1 flex flex-col items-center md:items-start w-full">
         <SideNav />
       </div>
-      <div className="flex-2 flex flex-col items-center w-full mt-2">
-        <TitleText title="Add a Book" />
-        <div className="w-full md:w-1/2 lg:w-1/3  px-4">
+      <div className="flex-2 flex flex-col items-center w-full mt-2 lg:ml-60">
+        <TitleText title={`Update ${title}`} />
+        <div className="w-full md:w-1/2 lg:w-1/2 2xl:w-1/3 px-4">
           <ToastContainer
             position="bottom-right"
             autoClose={5000}
@@ -140,7 +140,10 @@ const UpdateBook: React.FC = () => {
             theme="light"
             transition={Slide}
           />
-          <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
+          <form
+            className="flex flex-col space-y-4 mb-5"
+            onSubmit={handleSubmit}
+          >
             <label
               htmlFor="book-title"
               className="block text-sm font-medium text-gray-700"
@@ -177,7 +180,7 @@ const UpdateBook: React.FC = () => {
 
             <label
               htmlFor="description"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 mb-3"
             >
               Description
             </label>
