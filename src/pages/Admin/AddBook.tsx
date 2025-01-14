@@ -172,7 +172,7 @@ const AddBook: React.FC = () => {
               <div className="flex flex-col">
                 <label
                   htmlFor="file-upload"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-700 mb-3"
                 >
                   Upload File
                 </label>
