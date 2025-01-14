@@ -40,6 +40,7 @@ const UpdateBook: React.FC = () => {
         setDescription(result.data.description);
         setGenre(result.data.genre);
         setPublicationYear(result.data.publicationYear);
+        setImageSrc(result.data.imageSrc);
       })
       .catch((error) => {
         console.log(error);
@@ -74,6 +75,7 @@ const UpdateBook: React.FC = () => {
       publicationYear: publicationYear,
       imageName: imageName,
       imageFile: imageFile,
+      imageSrc: imageSrc,
     };
     axios
       .put(url, data, {

@@ -37,7 +37,7 @@ const AddBook: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title || !author || !description || !genre || !imageFile) {
+    if (!title || !author || !description || !genre) {
       toast.error("All fields are required.");
       return;
     }
@@ -50,6 +50,7 @@ const AddBook: React.FC = () => {
       publicationYear: publicationYear,
       imageName: imageName,
       imageFile: imageFile,
+      imageSrc: imageSrc,
     };
     axios
       .post(url, data, {
@@ -58,7 +59,6 @@ const AddBook: React.FC = () => {
         },
       })
       .then((results) => {
-        console.log(results);
         clearForm();
         toast.success("Book added successfully");
         navigate("/admin/dashboard");
@@ -95,25 +95,25 @@ const AddBook: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full lg:flex-row mt-4 lg:mt-0">
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Slide}
+      />
       <div className="flex-1 flex flex-col items-center md:items-start w-full ">
         <SideNav />
       </div>
       <div className="flex-2 flex flex-col items-center w-full mt-2 lg:ml-60">
         <TitleText title="Add a Book" />
         <div className="w-full md:w-1/2 lg:w-1/2 2xl:w-1/3 px-4">
-          <ToastContainer
-            position="bottom-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-            transition={Slide}
-          />
           <form
             className="flex flex-col space-y-4 mb-5"
             onSubmit={handleSubmit}
@@ -161,7 +161,6 @@ const AddBook: React.FC = () => {
             <textarea
               id="description"
               name="description"
-              required
               rows={10}
               placeholder="Type a description here..."
               className="p-3 w-full border bg-[#F6F6F6] border-gray-200 rounded-md resize-none focus:outline-2 focus:ring-1 focus:ring-pri_green"
