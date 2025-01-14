@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { TbLayoutDashboard } from "react-icons/tb";
 import { MdOutlineAddToPhotos } from "react-icons/md";
@@ -10,6 +10,7 @@ interface MenuItem {
   title: string;
   icon: React.ReactNode;
   link: string;
+  onClick?: () => void;
 }
 
 const menuItems: MenuItem[] = [
@@ -25,10 +26,24 @@ const menuItems: MenuItem[] = [
     icon: <MdOutlineAddToPhotos />,
     link: "/admin/create-a-post",
   },
-  { id: 3, title: "Sign Out", icon: <VscSignOut />, link: "#" },
+  {
+    id: 3,
+    title: "Sign Out",
+    icon: <VscSignOut />,
+    link: "#",
+    onClick: () => {},
+  },
 ];
 
 const SideNav: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    console.log("Logging out...");
+    localStorage.removeItem("authToken");
+    navigate("/");
+  };
+  menuItems[2].onClick = handleLogout;
   return (
     <>
       {/* Mobile Screen */}
@@ -39,6 +54,7 @@ const SideNav: React.FC = () => {
             title={item.title}
             icon={item.icon}
             link={item.link}
+            onClick={item.onClick}
           />
         ))}
       </div>
@@ -51,6 +67,7 @@ const SideNav: React.FC = () => {
             title={item.title}
             icon={item.icon}
             link={item.link}
+            onClick={item.onClick}
           />
         ))}
       </div>
@@ -58,21 +75,24 @@ const SideNav: React.FC = () => {
   );
 };
 
-function SideNavCom({ id, title, icon, link }: MenuItem) {
+interface SideNavComProps extends MenuItem {
+  onClick?: () => void; // Accept onClick handler as a prop
+}
+
+function SideNavCom({ id, title, icon, link, onClick }: SideNavComProps) {
   const location = useLocation();
   const isActive = location.pathname === link;
+
   return (
     <div>
-      {/* Mobile Screen */}
-
-      <Link to={link}>
+      {/* Render the "Sign Out" button differently */}
+      {title === "Sign Out" ? (
         <div
-          className={`flex bg-[#F6F6F6] p-2 items-center gap-3 rounded-lg text-text_disable hover:text-pri_green ${
-            isActive ? "lg:bg-white" : "lg:bg-transparent"
-          }`}
+          onClick={onClick}
+          className={`flex bg-[#F6F6F6] p-2 items-center gap-3 rounded-lg text-text_disable hover:text-pri_green cursor-pointer`}
         >
           <div
-            className={` p-2 rounded-lg text-xl ${
+            className={`p-2 rounded-lg text-xl ${
               isActive ? "text-white bg-pri_green" : "bg-white"
             }`}
           >
@@ -86,9 +106,33 @@ function SideNavCom({ id, title, icon, link }: MenuItem) {
             {title}
           </h3>
         </div>
-      </Link>
+      ) : (
+        <Link to={link}>
+          <div
+            className={`flex bg-[#F6F6F6] p-2 items-center gap-3 rounded-lg text-text_disable hover:text-pri_green ${
+              isActive ? "lg:bg-white" : "lg:bg-transparent"
+            }`}
+          >
+            <div
+              className={`p-2 rounded-lg text-xl ${
+                isActive ? "text-white bg-pri_green" : "bg-white"
+              }`}
+            >
+              {icon}
+            </div>
+            <h3
+              className={`text-lg font-semibold ${
+                isActive ? "text-pri_green" : ""
+              }`}
+            >
+              {title}
+            </h3>
+          </div>
+        </Link>
+      )}
     </div>
   );
 }
+
 
 export default SideNav;
