@@ -12,8 +12,8 @@ interface BookCardProps {
 const BookCard: React.FC<BookCardProps> = ({ title, author, link, image }) => {
   return (
     <Link to={link}>
-      <div className="flex flex-col items-center justify-center h-80 w-50 ">
-        <div className="h-60 w-44">
+      <div className="flex flex-col items-center justify-center h-80 w-50">
+        <div className="h-60 w-44 hover:scale-105 transition-transform duration-300">
           <img
             src={image || BookImge}
             alt={title}
