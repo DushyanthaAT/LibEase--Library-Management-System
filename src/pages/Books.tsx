@@ -29,7 +29,7 @@ const Book: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center md:mx-32">
+    <div className="flex flex-col items-center mx-2 md:mx-32">
       <TitleText title="Books" />
       <div className="grid gap-4 grid-auto-fit-xs w-full lg:w-auto lg:grid-cols-4">
         {data.map((book) => (
