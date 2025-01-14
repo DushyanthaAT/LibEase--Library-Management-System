@@ -217,7 +217,14 @@ const UpdateBook: React.FC = () => {
                 />
               </div>
             </div>
-            <ButtonCom name="Update" />
+            <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
+              <ButtonCom name="Update" onClick={handleSubmit} />
+              <ButtonCom
+                name="Discard"
+                type="reset"
+                onClick={() => navigate("/admin/dashboard")}
+              />
+            </div>
           </form>
         </div>
       </div>

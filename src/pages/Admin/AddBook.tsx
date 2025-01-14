@@ -23,10 +23,6 @@ const AddBook: React.FC = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const navigate = useNavigate();
 
-  // const getData=()=>{
-  //   axios.get("http://localhost:3001/books").then((response)=>{}
-  // }
-
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -114,10 +110,7 @@ const AddBook: React.FC = () => {
       <div className="flex-2 flex flex-col items-center w-full mt-2 lg:ml-60">
         <TitleText title="Add a Book" />
         <div className="w-full md:w-1/2 lg:w-1/2 2xl:w-1/3 px-4">
-          <form
-            className="flex flex-col space-y-4 mb-5"
-            onSubmit={handleSubmit}
-          >
+          <form className="flex flex-col space-y-4 mb-5">
             <label
               htmlFor="book-title"
               className="block text-sm font-medium text-gray-700"
@@ -190,8 +183,14 @@ const AddBook: React.FC = () => {
                 />
               </div>
             </div>
-
-            <ButtonCom name="Submit" />
+            <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
+              <ButtonCom name="Add" onClick={handleSubmit} />
+              <ButtonCom
+                name="Discard"
+                type="reset"
+                onClick={() => navigate("/admin/dashboard")}
+              />
+            </div>
           </form>
         </div>
       </div>
