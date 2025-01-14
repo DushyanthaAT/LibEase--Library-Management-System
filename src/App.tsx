@@ -15,6 +15,7 @@ import AddBook from "./pages/Admin/AddBook";
 import BookPage from "./pages/BookPage";
 import SignIn from "./pages/SignIn";
 import UpdateBook from "./pages/Admin/UpdateBook";
+import Footer from "./components/Footer";
 
 // PrivateRoute component to protect routes
 const PrivateRoute: React.FC<{ element: JSX.Element }> = ({ element }) => {
@@ -28,29 +29,39 @@ const PrivateRoute: React.FC<{ element: JSX.Element }> = ({ element }) => {
 
 const App: React.FC = () => {
   const location = useLocation();
+  const isPrivateRoute = [
+    "/admin/dashboard",
+    "/admin/create-a-post",
+    "/admin/update-a-post/:bookId",
+  ].some((route) => location.pathname.startsWith(route));
+
   return (
-    <div>
+    <div className="flex flex-col">
       {/* Conditionally render Navbar */}
       {location.pathname !== "/sign-in" && <Navbar />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/books" element={<Books />} />
-        <Route path="/book/:bookId" element={<BookPage />} />
-        <Route path="/about" element={<About />} />
-        <Route
-          path="/admin/dashboard"
-          element={<PrivateRoute element={<Dashboard />} />}
-        />
-        <Route
-          path="/admin/create-a-post"
-          element={<PrivateRoute element={<AddBook />} />}
-        />
-        <Route
-          path="/admin/update-a-post/:bookId"
-          element={<PrivateRoute element={<UpdateBook />} />}
-        />
-      </Routes>
+      <main className="min-h-[calc(100vh-60px)]">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/books" element={<Books />} />
+          <Route path="/book/:bookId" element={<BookPage />} />
+          <Route path="/about" element={<About />} />
+          <Route
+            path="/admin/dashboard"
+            element={<PrivateRoute element={<Dashboard />} />}
+          />
+          <Route
+            path="/admin/create-a-post"
+            element={<PrivateRoute element={<AddBook />} />}
+          />
+          <Route
+            path="/admin/update-a-post/:bookId"
+            element={<PrivateRoute element={<UpdateBook />} />}
+          />
+        </Routes>
+      </main>
+      {/* Render Footer only if not a private route */}
+      {!isPrivateRoute && <Footer />}
     </div>
   );
 };
