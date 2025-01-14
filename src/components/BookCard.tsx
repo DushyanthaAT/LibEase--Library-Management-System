@@ -13,7 +13,7 @@ const BookCard: React.FC<BookCardProps> = ({ title, author, link, image }) => {
   return (
     <Link to={link}>
       <div className="flex flex-col items-center justify-center h-80 w-50 ">
-        <div className="h-60 w-44 bg-emerald-300">
+        <div className="h-60 w-44">
           <img
             src={image || BookImge}
             alt={title}

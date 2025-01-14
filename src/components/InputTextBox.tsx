@@ -4,6 +4,7 @@ interface InputTextBoxProps {
   placeholder: string;
   icon: React.ReactNode;
   value: string;
+  type?: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -12,11 +13,12 @@ const InputTextBox: React.FC<InputTextBoxProps> = ({
   icon,
   value,
   onChange,
+  type,
 }) => {
   return (
     <div className="relative">
       <input
-        type="text"
+        type={type ? type : "text"}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
