@@ -140,10 +140,7 @@ const UpdateBook: React.FC = () => {
             theme="light"
             transition={Slide}
           />
-          <form
-            className="flex flex-col space-y-4 mb-5"
-            onSubmit={handleSubmit}
-          >
+          <form className="flex flex-col space-y-4 mb-5">
             <label
               htmlFor="book-title"
               className="block text-sm font-medium text-gray-700"

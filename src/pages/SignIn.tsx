@@ -11,6 +11,19 @@ import { Slide, toast, ToastContainer } from "react-toastify";
 import { TbEyeClosed } from "react-icons/tb";
 import { TbEye } from "react-icons/tb";
 
+const containerStyles = {
+  "--s": "167px",
+  "--c1": "#f1f9f7",
+  "--c2": "#ffffff",
+  "--_g":
+    "var(--c1) 6.1%, var(--c2) 6.4% 18.6%, var(--c1) 18.9% 31.1%, var(--c2) 31.4% 43.6%, var(--c1) 43.9% 56.1%, var(--c2) 56.4% 68.6%, #0000 68.9%",
+  background: `radial-gradient(var(--s) at 100% 0, var(--_g)),
+               radial-gradient(var(--s) at 0 0, var(--_g)),
+               radial-gradient(var(--s) at 0 100%, var(--_g)),
+               radial-gradient(var(--s) at 100% 100%, var(--_g)) var(--c1)`,
+  backgroundSize: "var(--s) var(--s)",
+};
+
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -60,7 +73,10 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="bg-sec_green w-full h-screen p-4 flex items-center justify-center">
+    <div
+      className="bg-sec_green w-full h-screen p-4 flex items-center justify-center"
+      style={containerStyles}
+    >
       <ToastContainer
         position="bottom-right"
         autoClose={3000}
@@ -74,15 +90,15 @@ const SignIn: React.FC = () => {
         theme="light"
         transition={Slide}
       />
-      <div className="bg-white w-full h-full rounded-lg flex flex-col items-center justify-center md:flex-row lg:gap-20">
+      <div className="bg-white w-[90vw] h-[480px] sm:w-[60vw] md:[50vw] max-w-xl flex flex-col items-center justify-end rounded-xl py-6 relative shadow-[0px_0px_20px_rgba(0,0,0,0.06)]">
         <img
           src={signInImage}
           alt=""
-          className=" top-0 w-[70vw] md:w-1/2 max-w-xl"
+          className=" w-full max-w-xl absolute -top-20 max-h-[350px] object-contain"
         />
-        <div className="flex flex-col md:items-start items-center justify-center">
+        <div className="flex flex-col items-center justify-center">
           <TitleText title="Sign In" />
-          <div className="mt-8 flex flex-col gap-4 w-[90vw] px-10 md:w-[40vw] md:px-0 max-w-md">
+          <div className="flex flex-col gap-4 w-[90vw] px-10 md:px-0 max-w-md">
             <InputTextBox
               placeholder="Email"
               icon={<MdEmail />}

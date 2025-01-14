@@ -21,7 +21,6 @@ import Footer from "./components/Footer";
 const PrivateRoute: React.FC<{ element: JSX.Element }> = ({ element }) => {
   const token = localStorage.getItem("authToken");
   if (!token) {
-    // Redirect to sign-in page if no token
     return <Navigate to="/sign-in" />;
   }
   return element;
@@ -37,7 +36,6 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col">
-      {/* Conditionally render Navbar */}
       {location.pathname !== "/sign-in" && <Navbar />}
       <main className="min-h-[calc(100vh-60px)]">
         <Routes>
@@ -61,7 +59,7 @@ const App: React.FC = () => {
         </Routes>
       </main>
       {/* Render Footer only if not a private route */}
-      {!isPrivateRoute && <Footer />}
+      {!isPrivateRoute || (location.pathname !== "/sign-in" && <Footer />)}
     </div>
   );
 };
