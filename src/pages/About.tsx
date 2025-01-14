@@ -2,14 +2,30 @@ import React from "react";
 import TitleText from "../components/TitleText";
 import logoHQ from "../assets/logo[hq].png";
 
+const containerStyles = {
+  "--s": "167px",
+  "--c1": "#b2cbcd",
+  "--c2": "#bfd1d2",
+  "--_g":
+    "var(--c1) 6.1%, var(--c2) 6.4% 18.6%, var(--c1) 18.9% 31.1%, var(--c2) 31.4% 43.6%, var(--c1) 43.9% 56.1%, var(--c2) 56.4% 68.6%, #0000 68.9%",
+  background: `radial-gradient(var(--s) at 100% 0, var(--_g)),
+               radial-gradient(var(--s) at 0 0, var(--_g)),
+               radial-gradient(var(--s) at 0 100%, var(--_g)),
+               radial-gradient(var(--s) at 100% 100%, var(--_g)) var(--c1)`,
+  backgroundSize: "var(--s) var(--s)",
+};
+
 const About: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto my-10 px-4">
       <div className="flex justify-center">
         <TitleText title="About" />
       </div>
-      <div className="flex justify-center mt-2 max-w-xl items-center mx-auto">
-        <img src={logoHQ} alt="logo" />
+      <div
+        className="flex justify-center mt-2 items-center mx-auto bg-gray-200 w-full px-20 py-10 rounded-lg"
+        style={{ ...containerStyles }}
+      >
+        <img src={logoHQ} alt="logo" className="max-w-xl w-[50vw]" />
       </div>
       <p className="text-justify text-gray-500 mt-4">
         The Library Management System is a simple yet powerful tool designed to
