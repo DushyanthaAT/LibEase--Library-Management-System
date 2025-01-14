@@ -59,7 +59,7 @@ const App: React.FC = () => {
         </Routes>
       </main>
       {/* Render Footer only if not a private route */}
-      {!isPrivateRoute || (location.pathname !== "/sign-in" && <Footer />)}
+      {!isPrivateRoute && location.pathname !== "/sign-in" && <Footer />}
     </div>
   );
 };
