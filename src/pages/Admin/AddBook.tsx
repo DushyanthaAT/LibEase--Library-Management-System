@@ -104,6 +104,7 @@ const AddBook: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full lg:flex-row mt-4 lg:mt-0">
+      {/* to show notifications */}
       <ToastContainer
         position="bottom-right"
         autoClose={3000}

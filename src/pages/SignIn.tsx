@@ -67,6 +67,7 @@ const SignIn: React.FC = () => {
       console.log("Login successful, token:", token);
       navigate("/admin/dashboard");
     } catch (err: any) {
+      toast.error("Invalid email or password");
       setError("Invalid email or password"); // Set error message
       console.error("Error during login:", err);
     } finally {

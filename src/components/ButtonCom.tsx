@@ -18,13 +18,14 @@ const ButtonCom: React.FC<ButtonComProps> = ({
       type="submit"
       onClick={onClick}
       disabled={disabled ? disabled : false}
+      //change button color conditionally based on reset and other
       className={`w-full p-3 bg-pri_blue  font-semibold rounded-lg ${
         type === "reset"
           ? "bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-700"
           : " hover:bg-hover_green bg-pri_green text-white"
       }`}
     >
-      {/* {loading ? "Updating..." : "Create Post"} */} {name}
+      {name}
     </button>
   );
 };

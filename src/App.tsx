@@ -28,11 +28,6 @@ const PrivateRoute: React.FC<{ element: JSX.Element }> = ({ element }) => {
 
 const App: React.FC = () => {
   const location = useLocation();
-  const isPrivateRoute = [
-    "/admin/dashboard",
-    "/admin/create-a-post",
-    "/admin/update-a-post/:bookId",
-  ].some((route) => location.pathname.startsWith(route));
 
   return (
     <div className="flex flex-col">

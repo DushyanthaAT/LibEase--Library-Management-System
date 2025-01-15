@@ -58,7 +58,7 @@ const SideNav: React.FC = () => {
   menuItems[2].onClick = handleLogout;
   return (
     <>
-      {/* Mobile Screen */}
+      {/* show nav as a top nav in mobile screens */}
       <div className="lg:hidden grid grid-auto-fit-xs gap-2 w-full px-4">
         {menuItems.map((item) => (
           <SideNavCom
@@ -71,7 +71,7 @@ const SideNav: React.FC = () => {
         ))}
       </div>
 
-      {/* Desktop Screen */}
+      {/* show full side nav in large screens */}
       <div className="hidden lg:flex flex-col w-60 h-screen bg-[#F6F6F6] gap-5 px-3 py-5 fixed">
         {menuItems.map((item) => (
           <SideNavCom
@@ -83,6 +83,7 @@ const SideNav: React.FC = () => {
           />
         ))}
       </div>
+
       {/* Confirmation Modal */}
       <ConfirmationModal
         isOpen={isModalOpen}

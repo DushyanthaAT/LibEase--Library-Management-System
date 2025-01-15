@@ -4,6 +4,7 @@ import logoHQ from "../assets/logo[hq].png";
 import { motion } from "framer-motion";
 import { fadeIn } from "../../utils/fmotion.ts";
 
+// CSS color variables for background
 const containerStyles = {
   "--s": "167px",
   "--c1": "#b2cbcd",

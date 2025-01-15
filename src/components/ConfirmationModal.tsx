@@ -16,6 +16,7 @@ const ConfirmationModal: React.FC<ModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
+  //model show message based on confirmation type
   let message = "";
   switch (confirmationType) {
     case "delete":

@@ -23,7 +23,8 @@ const Navbar: React.FC = () => {
       <Link to="/">
         <img src={logo} alt="logo" className="w-36 h-auto" />
       </Link>
-      {/* Desktop menu */}
+
+      {/* show full nav bar in desktops */}
       <ul className="hidden sm:flex space-x-10 font-semibold text-text_disable">
         {menuItems.map((item) => (
           <div className="flex items-center gap-1">
@@ -61,7 +62,7 @@ const Navbar: React.FC = () => {
         </Link>
       )}
 
-      {/* Mobile Menu */}
+      {/* limit menu items in mobile screens */}
       <div
         className="sm:hidden cursor-pointer"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -73,7 +74,7 @@ const Navbar: React.FC = () => {
         )}
       </div>
 
-      {/* Responsive Menu for mobile Screens*/}
+      {/* show navbar items as dropdown menu in mobile screens */}
       <div
         className={`${
           isMenuOpen ? "flex" : "hidden"
